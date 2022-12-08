@@ -11,9 +11,6 @@ from random import randint
 
 
 def hhmmss(ms):
-    # s = 1000
-    # m = 60000
-    # h = 360000
     s = round(ms / 1000)
     m, s = divmod(s, 60)
     h, m = divmod(m, 60)
@@ -26,7 +23,7 @@ class PlaylistModel(QAbstractListModel):
         super(PlaylistModel, self).__init__(*args, **kwargs)
         self.play___list = play___list
     def data(self, index, role):
-        if role == Qt.DisplayRole:
+        if role == Qt.DisplayRole: 
             media = self.play___list.media(index.row())
             return media.canonicalUrl().fileName()
 
@@ -42,11 +39,9 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
         self.setWindowTitle('Music Player')
         self.window = QMainWindow()
         self.playMusic = QMediaPlayer()
+        self.setFixedSize(550, 600)
 
         self.buttAddToPlayer.clicked.connect(self.open_file)
-        # self.music_play = QMediaPlayer()
-
-        # self.playMusic.setPlaylist(self.favorite_list)
 
 
         self.play_list.doubleClicked.connect(self.play_list_play)
@@ -68,7 +63,6 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
         self.play_list.setModel(self.model)
         self.play___list.currentIndexChanged.connect(self.playlist_position_changed)
         selection_model = self.play_list.selectionModel()
-        # print(selection_model)
         selection_model.selectionChanged.connect(self.playlist_selection_changed)
 
         self.playMusic_fv = QMediaPlayer()
@@ -80,9 +74,7 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
         self.favorite_list.setModel(self.model_fv)
         self.favorite___list.currentIndexChanged.connect(self.favorite_position_changed)
         selection_model_favorite = self.favorite_list.selectionModel()
-        # print(selection_model_favorite)
         selection_model_favorite.selectionChanged.connect(self.favorite_selection_changed)
-        # self.buttAdd_to_favorite_list.clicked.connect(self.playlit_add_to_favorite
 
         self.playMusic.durationChanged.connect(self.update_duration)
         self.playMusic.positionChanged.connect(self.update_position)
@@ -94,18 +86,13 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
         self.buttDell_from_favorite_list.clicked.connect(self.delete_from_favorite_list)
         self.buttAdd_to_favorite_list.clicked.connect(self.add_to_favorite)
         self.buttDell_from_play_list.clicked.connect(self.delete_from_play_list)
-        # self.play___list.connect(self.playMusic.save)
-        # self.buttRandom.clicked.connect(self.randommm)
 
         self.butt_skin_1.clicked.connect(self.skin_1)
         self.butt_skin_2.clicked.connect(self.skin_2)
         self.butt_skin_3.clicked.connect(self.skin_3)
-
+        self.butt_skin_4.clicked.connect(self.skin_4)
         self.checkBox.stateChanged.connect(self.clickBox)
-        # if self.checkBox.isChecked() == True:
-        #     self.test()
-        # else:
-        #     print(Falsex)
+
         self.openEvent()
 
         self.mediaTime.setButtonSymbols(2)
@@ -117,9 +104,6 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
 
 
 
-    # def randommm(self):
-    #     self.play___list.setPlaybackMode(QMediaPlaylist.Random)
-
     def clickBox(self,state):
         if state == QtCore.Qt.Checked:
             self.play___list.setPlaybackMode(QMediaPlaylist.Random)
@@ -130,8 +114,6 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
 
     def timerEvent(self):
         self.mediaTime.setTime(self.mediaTime.time().addSecs(1))
-        # print(self.mediaTime.time())
-
     
 
     def openEvent(self):
@@ -148,20 +130,10 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
             t = self.play___list.media(i)
             dataurl = t.canonicalUrl().toString().replace('file:///','')
             dataname = t.canonicalUrl().fileName()
-            # print(dataurl)
-            # f.write(f"{dataurl}\n")
             f.write('%s;%s\n' % (dataurl,dataname))
-
-            # f = open('music_list.txt','r')
-            # print(f.read())
         f.close()
 
 
-    # def random(self):
-    #     s = self.play___list.mediaCount()
-    #     r = randint(0,s)
-    #     k = self.play___list.media(r)
-    #     k.play()
     def update_duration(self, duration):
         self.mediaMusicRow.setMaximum(duration)
 
@@ -171,19 +143,55 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
         self.mediaMusicRow.blockSignals(False)
 
     def skin_1(self):
-        print('1')
+        self.buttPause.setStyleSheet('background-color : grey')
+        self.buttPlay.setStyleSheet('background-color : grey')
+        self.buttStop.setStyleSheet('background-color : grey')
+        self.buttReverse.setStyleSheet('background-color : grey')
+        self.buttForward.setStyleSheet('background-color : grey')
+        self.buttAdd_to_favorite_list.setStyleSheet('background-color : grey')
+        self.buttDell_from_play_list.setStyleSheet('background-color : grey')
+        self.buttDell_from_favorite_list.setStyleSheet('background-color : grey')
+        self.buttDell_from_play_list.setStyleSheet('background-color : grey')
+        self.buttAddToPlayer.setStyleSheet('background-color : grey')
+
 
     def skin_2(self):
-        self.buttPause.setStyleSheet('background-color : yellow;border-radius: 25px;')
-        self.buttPlay.setStyleSheet('background-color : yellow')
+        self.buttPause.setStyleSheet('background-color : red')
+        self.buttPlay.setStyleSheet('background-color : red')
+        self.buttStop.setStyleSheet('background-color : red')
+        self.buttReverse.setStyleSheet('background-color : red')
+        self.buttForward.setStyleSheet('background-color : red')
+        self.buttAdd_to_favorite_list.setStyleSheet('background-color : red')
+        self.buttDell_from_play_list.setStyleSheet('background-color : red')
+        self.buttDell_from_favorite_list.setStyleSheet('background-color : red')
+        self.buttDell_from_play_list.setStyleSheet('background-color : red')
+        self.buttAddToPlayer.setStyleSheet('background-color : red')
 
 
     def skin_3(self):
-        print('3')
-    # def playlit_add_to_favorite(self):
-    #     self.favorite_list.takeItem( self.play___list.media(index.row()))
-    #     print('adsad')
+        self.buttPause.setStyleSheet('background-color : blue')
+        self.buttPlay.setStyleSheet('background-color : blue')
+        self.buttStop.setStyleSheet('background-color : blue')
+        self.buttReverse.setStyleSheet('background-color : blue')
+        self.buttForward.setStyleSheet('background-color : blue')
+        self.buttAdd_to_favorite_list.setStyleSheet('background-color : blue')
+        self.buttDell_from_play_list.setStyleSheet('background-color : blue')
+        self.buttDell_from_favorite_list.setStyleSheet('background-color : blue')
+        self.buttDell_from_play_list.setStyleSheet('background-color : blue')
+        self.buttAddToPlayer.setStyleSheet('background-color : blue')
 
+
+    def skin_4(self):
+        self.buttPause.setStyleSheet('background-color : green')
+        self.buttPlay.setStyleSheet('background-color : green')
+        self.buttStop.setStyleSheet('background-color : green')
+        self.buttReverse.setStyleSheet('background-color : green')
+        self.buttForward.setStyleSheet('background-color : green')
+        self.buttAdd_to_favorite_list.setStyleSheet('background-color : green')
+        self.buttDell_from_play_list.setStyleSheet('background-color : green')
+        self.buttDell_from_favorite_list.setStyleSheet('background-color : green')
+        self.buttDell_from_play_list.setStyleSheet('background-color : green')
+        self.buttAddToPlayer.setStyleSheet('background-color : green')
 
 
     def delete_from_favorite_list(self):
@@ -201,7 +209,6 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
             self.play___list.removeMedia(item.row())
 
     def playlist_selection_changed(self, ix):
-        # We receive a QItemSelection from selectionChanged.
         i = ix.indexes()[0].row()
         self.play___list.setCurrentIndex(i)
 
@@ -211,7 +218,6 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
             self.play_list.setCurrentIndex(ix)    
 
     def favorite_selection_changed(self, ix):
-        # We receive a QItemSelection from selectionChanged.
         i = ix.indexes()[0].row()
         self.favorite___list.setCurrentIndex(i)
 
@@ -224,22 +230,10 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
     def add_to_favorite(self):
 
         ss = self.play_list.selectedIndexes()
-        # ss = 'C:/music_player/My_player/Honk.mp3'
-        # print(ss)
-        # print(dir(ss))
         for item in ss:
-            # print(type(item))
-            # print(dir(item))
             test= self.play___list.media(item.row()).canonicalUrl().toString().replace('file:///','')
             self.favorite___list.addMedia(QMediaContent(QUrl.fromLocalFile(test)))
             self.model_fv.layoutChanged.emit()
-
-    #     self.model_fv = PlaylistModel(self.play___list)
-    #     self.favorite_list.setModel(self.models)
-    #     s = self.play_list.selectedIndexes()
-    #     for y in s:
-    #         # print((y.row()))
-    #         self.favorite_list.setCurrentIndex(y)
         
 
     def play_list_play(self):
@@ -258,31 +252,15 @@ class MainWindow(QMainWindow, Ui_Favorite_name):
             "",
             "mp3 Audio (*.mp3);;mp4 Video (*.mp4);;Movie files (*.mov);;All files (*.*)",
         )
-    #     # print('okey')
         if path:
             print(path)
             self.play___list.addMedia(QMediaContent(QUrl.fromLocalFile(path)))
-            # self.favorite___list.addMedia(QMediaContent(QUrl.fromLocalFile(path)))
-
-            # self.play___list.addMedia(QMediaContent(QUrl.fromLocalFile(path)))
-
 
         self.model.layoutChanged.emit()
-        # self.model_fv.layoutChanged.emit()
-
-    # def toggle_viewer(self, state):
-    #     if state:
-    #         self.viewer.show()
-    #     else:
-    #         self.viewer.hide()
-
-    # def erroralert(self, *args):
-    #     print(args)
-
 
 if __name__ == "__main__":
     app = QApplication([])
-    app.setApplicationName("ssssssssssssssssssssssss")
+    app.setApplicationName("Music_Player")
     app.setStyle("Fusion")
 
     window = MainWindow()
