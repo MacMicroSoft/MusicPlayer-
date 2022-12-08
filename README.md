@@ -15,3 +15,9 @@ HOW INSTALL?
 4) Run the file - musicPlayer.py 
 
 If you don't have any music on your laptop.You can choose some from folder 'music' which was downloaded from musicplayer.zip.
+
+
+For this program to work you should have:
+Python --- https://www.python.org
+pyqt5 ---- pip install PyQt5
+QTDesigner --- https://www.qt.io/download
